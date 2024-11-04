@@ -38,10 +38,7 @@ export interface PhoneInputState {
   countryCode: CountryCode;
   disabled: boolean;
 }
-export default class PhoneInput extends Component<
-  PhoneInputProps,
-  PhoneInputState
-> {
+class PhoneInput extends Component<PhoneInputProps, PhoneInputState> {
   constructor(props: PhoneInputProps, context: any);
   UNSAFE_componentWillMount(): Promise<void>;
   UNSAFE_componentWillReceiveProps(nextProps: PhoneInputProps): Promise<void>;
@@ -298,7 +295,6 @@ export default class PhoneInput extends Component<
     | "AX";
   getCallingCode: () => string | undefined;
   isValidNumber: (number: string) => boolean;
-  focus: () => void;
   onSelect: (country: Country) => void;
   getNumberAfterPossiblyEliminatingZero: () => {
     number: string;
@@ -307,6 +303,14 @@ export default class PhoneInput extends Component<
   onChangeText: (text: string) => void;
   render(): JSX.Element;
 }
+
+// Define the ref-forwarding component type
+export type PhoneInput = ForwardRefExoticComponent<
+  PhoneInputProps & RefAttributes<TextInput>
+>;
+
+const PhoneInput: PhoneInput = PhoneInputComponent as any;
+export default PhoneInput;
 
 export function isValidNumber(
   number: string,
